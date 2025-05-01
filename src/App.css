@@ -1,0 +1,26 @@
+#root {
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+/*input[type="radio"]:checked + label {
+  box-shadow: 0 0 0 3px #485785;
+}*/
+
+/*
+  primary-485785
+  secondary-7B8AB8
+
+ navbar
+  foreground-ffffff
+   
+ body 
+  foreground-000000
+  background-D9D9D9
+
+ extras
+  success-#68d391
+  danger-#f56565
+*/
