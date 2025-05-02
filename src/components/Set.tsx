@@ -1,99 +1,58 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 
+import { fetchSet, fetchQuestions, fetchAnswers } from "../api/api.ts";
+
 export default function Set() {
   let params = useParams();
   const setId = params.setId;
 
+  const [set, setSet] = useState(null);
+  const [questions, setQuestions] = useState(null);
+  const [answers, setAnswers] = useState(null);
+
   const [questionIndex, setQuestionIndex] = useState(0);
-
-  const [setData, setSetData] = useState(null);
-  const [questionArr, setQuestionArr] = useState(null);
-  const [answersArr, setAnswersArr] = useState(null);
-
-  const [currAnswersArr, setCurrAnswersArr] = useState([]);
+  const [currAnswers, setCurrAnswers] = useState([]);
 
   useEffect(() => {
-    fetchSetData();
+    fetchSet(setId).then((res) => setSet(res));
   }, []);
 
-  const fetchSetData = async () => {
-    try {
-      const apiURI = "http://localhost:3300/sets/set_id/" + setId;
-
-      const response = await fetch(apiURI);
-      const result = (await response.json())[0];
-
-      setSetData(result);
-    } catch (error) {
-      console.error("Error fetching data:", error);
+  useEffect(() => {
+    if (set !== null) {
+      fetchQuestions(setId).then((res) => setQuestions(res));
     }
-  };
+  }, [set]);
 
   useEffect(() => {
-    if (setData !== null) {
-      fetchQuestionArr();
+    if (set !== null) {
+      fetchAnswers(setId).then((res) => setAnswers(res));
     }
-  }, [setData]);
-
-  const fetchQuestionArr = async () => {
-    try {
-      const apiURI = "http://localhost:3300/questions/set_id/" + setId;
-
-      const response = await fetch(apiURI);
-      const result = await response.json();
-
-      setQuestionArr(result);
-      console.log(apiURI)
-      console.log('result')
-      console.log(result)
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  useEffect(() => {
-    if (setData !== null) {
-      fetchAnswersArr(setId);
-    }
-  }, [setData]);
-
-  const fetchAnswersArr = async (setId) => {
-    try {
-      const apiURI = "http://localhost:3300/answers/set_id/" + setId;
-
-      const response = await fetch(apiURI);
-      const result = await response.json();
-
-      setAnswersArr(result);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  }, [set]);
 
   useEffect(() => {
     randomizeAnswers();
-  }, [answersArr, questionIndex]);
+  }, [answers, questionIndex]);
 
   const randomizeAnswers = () => {
-    let tempCurrAnswersArr = [];
+    let tempCurrAnswers = [];
 
-    if (answersArr !== null) {
-      tempCurrAnswersArr.push(answersArr[questionIndex]);
+    if (answers !== null) {
+      tempCurrAnswers.push(answers[questionIndex]);
 
-      while (tempCurrAnswersArr.length < 4) {
-        let randInt = Math.floor(Math.random() * answersArr.length);
-        let randAns = answersArr[randInt];
+      while (tempCurrAnswers.length < 4) {
+        let randInt = Math.floor(Math.random() * answers.length);
+        let randAns = answers[randInt];
 
-        if (answersArr.length < 4 || !tempCurrAnswersArr.includes(randAns)) {
-          tempCurrAnswersArr.push(randAns);
+        if (answers.length < 4 || !tempCurrAnswers.includes(randAns)) {
+          tempCurrAnswers.push(randAns);
         }
       }
 
-      // console.log(tempCurrAnswersArr);
+      // console.log(tempCurrAnswers);
     }
 
-    setCurrAnswersArr(tempCurrAnswersArr);
+    setCurrAnswers(tempCurrAnswers);
   };
 
   const handleAnswerSelect = (e, answerData) => {
@@ -104,7 +63,7 @@ export default function Set() {
 
     selectedInput.labels[0].style.backgroundColor = bgColor;
 
-    if (questionArr.length === questionIndex + 1) {
+    if (questions.length === questionIndex + 1) {
       return;
     }
 
@@ -114,17 +73,17 @@ export default function Set() {
     }, 1000);
   };
 
-  console.log(questionArr)
-  console.log(questionIndex)
+  // console.log(questions);
+  // console.log(questionIndex);
 
   return (
     <>
-      {answersArr !== null ? (
+      {questions !== null && answers !== null ? (
         <div>
-          <p>{setData.title}</p>
-          <p>{questionArr[questionIndex].question_text}</p>
+          <p>{set.title}</p>
+          <p>{questions[questionIndex].question_text}</p>
           <form>
-            {currAnswersArr.map((answer, index) => {
+            {currAnswers.map((answer, index) => {
               return (
                 <div key={answer.answer_text}>
                   <input

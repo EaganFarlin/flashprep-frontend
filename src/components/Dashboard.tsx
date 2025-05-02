@@ -1,26 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
 
+import { fetchSets } from "../api/api.ts";
+
 export default function Dashboard() {
   const [sets, setSets] = useState(null);
 
   useEffect(() => {
-    fetchSetData();
+    fetchSets().then((res) => setSets(res));
   }, []);
-
-  const fetchSetData = async () => {
-    try {
-      const apiURI = "http://localhost:3300/sets";
-
-      const response = await fetch(apiURI);
-      const result = await response.json();
-
-      setSets(result);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-  console.log(sets);
 
   return (
     <>
@@ -31,9 +19,9 @@ export default function Dashboard() {
               <Link
                 to={`/set/${set.set_id}`}
                 key={set.set_id}
-                className="flex justify-center flex-col min-h-30 p-8 border-2 rounded border-gray-700 hover:border-b-4 hover:border-b-amber-500" 
+                className="flex justify-center flex-col min-h-30 p-8 border-2 rounded border-gray-700 hover:border-b-4 hover:border-b-amber-500"
               >
-                <p className='text-xl hover:gray-900'>{set.title}</p>
+                <p className="text-xl hover:gray-900">{set.title}</p>
                 <p>{set.description}</p>
               </Link>
             );

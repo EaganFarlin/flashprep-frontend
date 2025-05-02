@@ -10,8 +10,6 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 
-import { run } from "../server/fetch-db.ts";
-
 import RootLayout from "./components/RootLayout";
 import Dashboard from "./components/Dashboard";
 import CreateSet from "./components/CreateSet";

@@ -1,6 +1,8 @@
 import { nanoid } from "nanoid";
 import { useState } from "react";
 
+import { createSet } from "../api/api.ts";
+
 export default function CreateSet() {
   const [qnaArr, setQNAArr] = useState([{ question: "", answer: "" }]);
 
@@ -46,7 +48,7 @@ export default function CreateSet() {
 
     console.log(qnaArr);
 
-    let newSetData = {
+    let newSet = {
       set: {
         id: nanoid(),
         title: setTitle,
@@ -55,14 +57,7 @@ export default function CreateSet() {
       qna: qnaArr,
     };
 
-    fetch("http://localhost:3300/sets/new", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newSetData),
-    });
+    createSet(newSet);
 
     setQNAArr([{ question: "", answer: "" }]);
   };
