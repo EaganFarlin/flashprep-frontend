@@ -1,13 +1,10 @@
 import { useState, useEffect } from "react";
 import {
-  BrowserRouter,
   Routes,
   Route,
-  useRouter,
   Navigate,
 } from "react-router";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+// import reactLogo from "./assets/react.svg";
 import "./App.css";
 
 import RootLayout from "./components/RootLayout";
