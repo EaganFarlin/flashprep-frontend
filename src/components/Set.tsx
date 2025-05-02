@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 
-import { fetchSet, fetchQuestions, fetchAnswers } from "../api/api.ts";
+import { fetchSet, fetchQuestions, fetchAnswers } from "../api/api.js";
 
 export default function Set() {
   let params = useParams();

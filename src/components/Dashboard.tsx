@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
 
-import { fetchSets } from "../api/api.ts";
+import { fetchSets } from "../api/api.js";
 
 export default function Dashboard() {
   const [sets, setSets] = useState(null);

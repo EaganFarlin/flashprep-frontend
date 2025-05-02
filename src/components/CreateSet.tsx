@@ -1,7 +1,7 @@
 import { nanoid } from "nanoid";
 import { useState } from "react";
 
-import { createSet } from "../api/api.ts";
+import { createSet } from "../api/api.js";
 
 export default function CreateSet() {
   const [qnaArr, setQNAArr] = useState([{ question: "", answer: "" }]);
