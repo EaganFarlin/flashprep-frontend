@@ -1,9 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  Routes,
-  Route,
-  Navigate,
-} from "react-router";
+import { Routes, Route, Navigate } from "react-router";
 // import reactLogo from "./assets/react.svg";
 import "./App.css";
 

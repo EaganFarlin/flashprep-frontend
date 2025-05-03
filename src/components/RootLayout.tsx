@@ -15,7 +15,7 @@ export default function RootLayout() {
           +
         </Link>
       </header>
-      <main> 
+      <main>
         <Outlet />
       </main>
     </div>
